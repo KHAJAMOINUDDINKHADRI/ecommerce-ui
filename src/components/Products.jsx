@@ -5,7 +5,6 @@ import { addCart } from "../redux/action";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import ProductCard from "./ProductCard";
 import "../css/product.css";
@@ -14,7 +13,6 @@ const Products = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(data);
   const [loading, setLoading] = useState(false);
-  let componentMounted = true;
 
   const dispatch = useDispatch();
 
@@ -26,17 +24,10 @@ const Products = () => {
     const getProducts = async () => {
       setLoading(true);
       const response = await fetch("https://fakestoreapi.com/products/");
-      if (componentMounted) {
-        setData(await response.clone().json());
-        setFilter(await response.json());
-        setLoading(false);
-      }
-
-      return () => {
-        componentMounted = false;
-      };
+      setData(await response.clone().json());
+      setFilter(await response.json());
+      setLoading(false);
     };
-
     getProducts();
   }, []);
 
@@ -66,11 +57,6 @@ const Products = () => {
         </div>
       </>
     );
-  };
-
-  const filterProduct = (cat) => {
-    const updatedList = data.filter((item) => item.category === cat);
-    setFilter(updatedList);
   };
 
   const ShowProducts = () => {

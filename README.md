@@ -2,9 +2,11 @@
 
 ## Assessment Deliverables
 
-### 🚀 Working Demo
+### 🚀 Live Demo
 
-[Your deployed link here, e.g. Netlify/GitHub Pages/CodeSandbox]
+You can try the live demo here:  
+👉 [https://ecommerce-ui-kmk.netlify.app](https://ecommerce-ui-kmk.netlify.app)
+
 
 ### 📝 Brief Note
 
