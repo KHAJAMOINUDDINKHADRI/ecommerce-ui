@@ -13,12 +13,12 @@ const handleCart = (state = getInitialCart(), action) => {
       // Check if product already in cart
       const exist = state.find((x) => x.id === product.id);
       if (exist) {
-        // Increase the quantity
+        // Increase the quantity by the amount added
         updatedCart = state.map((x) =>
-          x.id === product.id ? { ...x, qty: x.qty + 1 } : x
+          x.id === product.id ? { ...x, qty: x.qty + (product.qty || 1) } : x
         );
       } else {
-        updatedCart = [...state, { ...product, qty: 1 }];
+        updatedCart = [...state, { ...product, qty: product.qty || 1 }];
       }
       // Update localStorage
       localStorage.setItem("cart", JSON.stringify(updatedCart));

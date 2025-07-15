@@ -16,8 +16,8 @@ const Products = () => {
 
   const dispatch = useDispatch();
 
-  const addProduct = (product) => {
-    dispatch(addCart(product));
+  const addProduct = (product, quantity = 1) => {
+    dispatch(addCart({ ...product, qty: quantity }));
   };
 
   useEffect(() => {
@@ -99,9 +99,9 @@ const Products = () => {
                   colors,
                   stock,
                 }}
-                onAddToCart={() => {
+                onAddToCart={(quantity) => {
                   toast.success("Added to cart");
-                  addProduct(product);
+                  addProduct(product, quantity);
                 }}
               />
             </div>

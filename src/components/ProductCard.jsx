@@ -105,7 +105,7 @@ const ProductCard = ({ product, onAddToCart }) => {
         </div>
         <button
           className="add-to-cart-btn modern-add-to-cart small-cart-btn"
-          onClick={onAddToCart}
+          onClick={() => onAddToCart(quantity)}
           disabled={isOutOfStock}
         >
           <span className="cart-icon" role="img" aria-label="cart">
