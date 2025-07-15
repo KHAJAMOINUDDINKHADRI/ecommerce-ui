@@ -7,6 +7,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import ProductCard from "./ProductCard";
+import "../css/product.css";
 
 const Products = () => {
   const [data, setData] = useState([]);
@@ -72,90 +74,54 @@ const Products = () => {
   };
 
   const ShowProducts = () => {
+    const softColors = [
+      "#A3A1FB", // soft violet
+      "#6EC1E4", // soft blue
+      "#A8E6CF", // soft green
+      "#FFD6A5", // soft yellow
+      "#FFAAA7", // soft red/pink
+      "#FFB347", // soft orange
+      "#D4A5A5", // soft brown
+    ];
     return (
-      <>
-        <div className="buttons text-center py-5">
-          <button
-            className="btn btn-outline-dark btn-sm m-2"
-            onClick={() => setFilter(data)}
-          >
-            All
-          </button>
-          <button
-            className="btn btn-outline-dark btn-sm m-2"
-            onClick={() => filterProduct("men's clothing")}
-          >
-            Men's Clothing
-          </button>
-          <button
-            className="btn btn-outline-dark btn-sm m-2"
-            onClick={() => filterProduct("women's clothing")}
-          >
-            Women's Clothing
-          </button>
-          <button
-            className="btn btn-outline-dark btn-sm m-2"
-            onClick={() => filterProduct("jewelery")}
-          >
-            Jewelery
-          </button>
-          <button
-            className="btn btn-outline-dark btn-sm m-2"
-            onClick={() => filterProduct("electronics")}
-          >
-            Electronics
-          </button>
-        </div>
-
+      <div className="products-row">
         {filter.map((product) => {
+          const title = product.title || "Product Name";
+          const price = product.price || 49.99;
+          const description =
+            product.description || "A beautiful product for your home.";
+          const rating =
+            typeof product.rating === "object" && product.rating !== null
+              ? product.rating.rate
+              : product.rating || 4.8;
+          const reviews =
+            typeof product.rating === "object" && product.rating !== null
+              ? product.rating.count
+              : product.reviews || 12;
+          const colors = product.colors || softColors;
+          const stock = product.stock !== undefined ? product.stock : 10;
           return (
-            <div
-              id={product.id}
-              key={product.id}
-              className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4"
-            >
-              <div className="card text-center h-100" key={product.id}>
-                <img
-                  className="card-img-top p-3"
-                  src={product.image}
-                  alt="Card"
-                  height={300}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">
-                    {product.title.substring(0, 12)}...
-                  </h5>
-                  <p className="card-text">
-                    {product.description.substring(0, 90)}...
-                  </p>
-                </div>
-                <ul className="list-group list-group-flush">
-                  <li className="list-group-item lead">$ {product.price}</li>
-                  {/* <li className="list-group-item">Dapibus ac facilisis in</li>
-                    <li className="list-group-item">Vestibulum at eros</li> */}
-                </ul>
-                <div className="card-body">
-                  <Link
-                    to={"/product/" + product.id}
-                    className="btn btn-dark m-1"
-                  >
-                    Buy Now
-                  </Link>
-                  <button
-                    className="btn btn-dark m-1"
-                    onClick={() => {
-                      toast.success("Added to cart");
-                      addProduct(product);
-                    }}
-                  >
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
+            <div key={product.id} className="product-col">
+              <ProductCard
+                product={{
+                  ...product,
+                  title,
+                  price,
+                  description,
+                  rating,
+                  reviews,
+                  colors,
+                  stock,
+                }}
+                onAddToCart={() => {
+                  toast.success("Added to cart");
+                  addProduct(product);
+                }}
+              />
             </div>
           );
         })}
-      </>
+      </div>
     );
   };
   return (
